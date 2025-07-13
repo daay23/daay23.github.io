@@ -3,261 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            font-family: Arial, sans-serif;
+            font-family: 'Orbitron', monospace;
+            background: transparent;
             color: white;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            overflow: hidden;
         }
-        
-        .container {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid #00ffff;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-            min-width: 300px;
+
+        .menu-container {
+            position: fixed;
+            top: 50%;
+            right: 15%;
+            transform: translateY(-50%);
+            width: 350px;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.3));
         }
-        
-        .title {
+
+        .menu-header {
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff) 1;
+            padding: 15px 25px;
             text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
-        }
-        
-        .dropdown {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             position: relative;
-            margin: 15px 0;
+            overflow: hidden;
+            animation: headerGlow 3s ease-in-out infinite alternate;
         }
-        
-        .dropdown-header {
-            background: linear-gradient(45deg, #333, #555);
-            border: 2px solid #00ffff;
-            padding: 12px 15px;
+
+        @keyframes headerGlow {
+            0% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(255, 0, 255, 0.7); }
+        }
+
+        .menu-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .menu-items {
+            background: linear-gradient(145deg, #0f0f0f, #1f1f1f);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff) 1;
+            border-top: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-item {
+            padding: 15px 25px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
             cursor: pointer;
-            border-radius: 8px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 15px;
+            font-weight: 700;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
-        }
-        
-        .dropdown-header:hover {
-            background: linear-gradient(45deg, #555, #777);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-        }
-        
-        .dropdown-arrow {
-            transition: transform 0.3s ease;
-        }
-        
-        .dropdown-content {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #ffff00;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            max-height: 0;
+            position: relative;
             overflow: hidden;
-            transition: max-height 0.3s ease;
-            z-index: 1000;
         }
-        
-        .dropdown.open .dropdown-content {
-            max-height: 200px;
-        }
-        
-        .dropdown.open .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-        
-        .dropdown-item {
-            padding: 10px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid rgba(255, 255, 0, 0.3);
-            transition: background 0.3s ease;
-        }
-        
-        .dropdown-item:last-child {
+
+        .menu-item:last-child {
             border-bottom: none;
         }
-        
-        .dropdown-item:hover {
-            background: rgba(255, 255, 0, 0.2);
-        }
-        
-        .simple-button {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            border: none;
-            padding: 12px 20px;
-            margin: 10px 0;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
-            font-size: 16px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .menu-item:hover::before {
+            left: 100%;
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(145deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            color: #00ffff;
+            text-shadow: 0 0 10px currentColor;
+            transform: translateX(10px);
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .menu-item.selected {
+            background: linear-gradient(145deg, rgba(255, 0, 100, 0.3), rgba(0, 255, 255, 0.3));
+            color: #ffffff;
+            text-shadow: 0 0 15px #ff0064;
+            border-left: 4px solid #ff0064;
+            animation: pulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: inset 0 0 20px rgba(255, 0, 100, 0.3); }
+            100% { box-shadow: inset 0 0 40px rgba(255, 0, 100, 0.6); }
+        }
+
+        .menu-item-text {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .menu-item-arrow {
+            font-size: 14px;
+            margin-left: 15px;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
-        
-        .simple-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+
+        .menu-item:hover .menu-item-arrow {
+            transform: translateX(5px) scale(1.2);
+            color: #ffff00;
         }
-        
+
+        .submenu {
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff) 1;
+            border-top: 1px solid rgba(255, 0, 255, 0.5);
+            margin-left: 30px;
+            margin-top: 5px;
+            display: none;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .submenu.open {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .submenu-item {
+            padding: 12px 25px;
+            border-bottom: 1px solid rgba(255, 0, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 400;
+            color: #cccccc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submenu-item:last-child {
+            border-bottom: none;
+        }
+
+        .submenu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+            transition: width 0.4s ease;
+        }
+
+        .submenu-item:hover::before {
+            width: 100%;
+        }
+
+        .submenu-item:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px #ff00ff;
+            transform: translateX(10px);
+        }
+
+        .submenu-item.selected {
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.3), rgba(255, 69, 0, 0.3));
+            color: #ffffff;
+            text-shadow: 0 0 15px #ffd700;
+            border-left: 3px solid #ffd700;
+        }
+
+        .controls-info {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #00ffff, #ff00ff) 1;
+            padding: 15px 20px;
+            font-size: 12px;
+            font-family: 'Orbitron', monospace;
+            color: #cccccc;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .status-bar {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            border: 2px solid #00ff00;
+            padding: 10px 15px;
+            font-size: 13px;
+            font-family: 'Orbitron', monospace;
+            color: #00ff00;
+            border-radius: 8px;
+            text-shadow: 0 0 10px #00ff00;
+            animation: statusBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes statusBlink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.7; }
+        }
+
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 255, 0, 0.9);
-            color: black;
-            padding: 15px;
-            border-radius: 8px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            border: 3px solid;
+            border-image: linear-gradient(45deg, #00ff00, #ffff00, #ff0000, #00ff00) 1;
+            padding: 25px 35px;
+            font-size: 16px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: #00ff00;
             opacity: 0;
-            transition: opacity 0.3s ease;
-            font-weight: bold;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            text-shadow: 0 0 15px currentColor;
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
         }
-        
+
         .notification.show {
             opacity: 1;
+            transform: translate(-50%, -50%) scale(1.05);
+            animation: notificationPulse 0.5s ease-out;
         }
-        
-        .controls {
-            margin-top: 20px;
-            text-align: center;
+
+        @keyframes notificationPulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .menu-title {
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 5px #00ffff); }
+            100% { filter: drop-shadow(0 0 15px #ff00ff); }
+        }
+
+        .breadcrumb {
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            padding: 8px 15px;
             font-size: 12px;
-            color: #ccc;
+            color: #00ffff;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            text-shadow: 0 0 5px currentColor;
+            backdrop-filter: blur(5px);
+        }
+
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: #00ffff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle 3s linear infinite;
+        }
+
+        @keyframes particle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Holographic effect */
+        .menu-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff);
+            z-index: -1;
+            border-radius: 10px;
+            opacity: 0.3;
+            animation: hologram 4s linear infinite;
+        }
+
+        @keyframes hologram {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="title">🌟 AURA DROPDOWN MENU 🌟</div>
-        
-        <button class="simple-button" onclick="selectOption('Simple Option 1')">
-            ⚡ Simple Option 1
-        </button>
-        
-        <button class="simple-button" onclick="selectOption('Simple Option 2')">
-            🔥 Simple Option 2
-        </button>
-        
-        <div class="dropdown" id="dropdown1">
-            <div class="dropdown-header" onclick="toggleDropdown('dropdown1')">
-                <span>🚗 Vehicle Options</span>
-                <span class="dropdown-arrow">▼</span>
-            </div>
-            <div class="dropdown-content">
-                <div class="dropdown-item" onclick="selectOption('Spawn Adder')">🏎️ Spawn Adder</div>
-                <div class="dropdown-item" onclick="selectOption('Spawn Zentorno')">🚙 Spawn Zentorno</div>
-                <div class="dropdown-item" onclick="selectOption('Repair Vehicle')">🔧 Repair Vehicle</div>
-            </div>
+    <div class="breadcrumb">◤ SYSTEM › MAIN INTERFACE ◢</div>
+    
+    <div class="menu-container">
+        <div class="menu-header">
+            <span class="menu-title">◈ QUANTUM MENU ◈</span>
         </div>
         
-        <div class="dropdown" id="dropdown2">
-            <div class="dropdown-header" onclick="toggleDropdown('dropdown2')">
-                <span>⚙️ Player Options</span>
-                <span class="dropdown-arrow">▼</span>
+        <div class="menu-items">
+            <div class="menu-item" onclick="toggleSubmenu('option1')" id="item1">
+                <span class="menu-item-text">⚡ OPTION 1</span>
+                <span class="menu-item-arrow">▶</span>
             </div>
-            <div class="dropdown-content">
-                <div class="dropdown-item" onclick="selectOption('God Mode')">🛡️ God Mode</div>
-                <div class="dropdown-item" onclick="selectOption('Add Money')">💰 Add Money</div>
-                <div class="dropdown-item" onclick="selectOption('Heal Player')">❤️ Heal Player</div>
+            <div class="submenu" id="submenu1">
+                <div class="submenu-item" onclick="selectOption('Option 1 - Action Alpha')">◦ Action Alpha</div>
+                <div class="submenu-item" onclick="selectOption('Option 1 - Action Beta')">◦ Action Beta</div>
+            </div>
+            
+            <div class="menu-item" onclick="toggleSubmenu('option2')" id="item2">
+                <span class="menu-item-text">🔥 OPTION 2</span>
+                <span class="menu-item-arrow">▶</span>
+            </div>
+            <div class="submenu" id="submenu2">
+                <div class="submenu-item" onclick="selectOption('Option 2 - Action Gamma')">◦ Action Gamma</div>
+                <div class="submenu-item" onclick="selectOption('Option 2 - Action Delta')">◦ Action Delta</div>
             </div>
         </div>
-        
-        <div class="controls">
-            Press 1-6 for quick actions | ESC to close
-        </div>
+    </div>
+
+    <div class="status-bar" id="status">◈ STATUS: ONLINE ◈</div>
+    
+    <div class="controls-info">
+        ▲ ENTER: Execute<br>
+        ▼ ESC: Return<br>
+        ◆ 1-2: Quick Access
     </div>
     
     <div class="notification" id="notification"></div>
-    
+
     <script>
-        function toggleDropdown(dropdownId) {
-            const dropdown = document.getElementById(dropdownId);
-            const isOpen = dropdown.classList.contains('open');
+        let currentSubmenu = null;
+
+        // Create floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 3 + 's';
+            particle.style.background = ['#00ffff', '#ff00ff', '#ffff00'][Math.floor(Math.random() * 3)];
+            document.body.appendChild(particle);
             
-            // Close all dropdowns
-            document.querySelectorAll('.dropdown').forEach(dd => {
-                dd.classList.remove('open');
+            setTimeout(() => {
+                particle.remove();
+            }, 3000);
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 500);
+
+        function toggleSubmenu(optionId) {
+            const submenu = document.getElementById('submenu' + optionId.slice(-1));
+            const menuItem = document.getElementById('item' + optionId.slice(-1));
+            
+            // Close other submenus
+            document.querySelectorAll('.submenu').forEach(sub => {
+                if (sub !== submenu) {
+                    sub.classList.remove('open');
+                }
             });
             
-            // Toggle current dropdown
-            if (!isOpen) {
-                dropdown.classList.add('open');
+            // Remove selection from other items
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Toggle current submenu
+            if (submenu.classList.contains('open')) {
+                submenu.classList.remove('open');
+                menuItem.classList.remove('selected');
+                currentSubmenu = null;
+                updateBreadcrumb('◤ SYSTEM › MAIN INTERFACE ◢');
+            } else {
+                submenu.classList.add('open');
+                menuItem.classList.add('selected');
+                currentSubmenu = optionId;
+                updateBreadcrumb(`◤ SYSTEM › ${menuItem.querySelector('.menu-item-text').textContent} ◢`);
             }
         }
-        
-        function selectOption(option) {
-            console.log(option + ' - working');
-            showNotification(option + ' selected!');
-            
-            // Close all dropdowns
-            document.querySelectorAll('.dropdown').forEach(dd => {
-                dd.classList.remove('open');
+
+        function selectOption(optionText) {
+            // Remove previous selections
+            document.querySelectorAll('.submenu-item').forEach(item => {
+                item.classList.remove('selected');
             });
+            
+            // Add selection to current item
+            event.target.classList.add('selected');
+            
+            // Show notification
+            showNotification(`◈ EXECUTED: ${optionText} ◈`);
+            updateStatus(`◈ PROCESSING: ${optionText.toUpperCase()} ◈`);
+            
+            // Console output
+            console.log(`${optionText} - working`);
+            
+            // Send to FiveM if available
+            if (typeof fetch !== 'undefined') {
+                fetch('https://quantum-menu/execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ option: optionText })
+                }).catch(() => {});
+            }
+            
+            // Reset status after 3 seconds
+            setTimeout(() => {
+                updateStatus('◈ STATUS: ONLINE ◈');
+            }, 3000);
         }
-        
+
         function showNotification(message) {
             const notification = document.getElementById('notification');
-            notification.textContent = message;
+            notification.innerHTML = message;
             notification.classList.add('show');
             
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
         }
-        
+
+        function updateStatus(status) {
+            document.getElementById('status').innerHTML = status;
+        }
+
+        function updateBreadcrumb(path) {
+            document.querySelector('.breadcrumb').innerHTML = path;
+        }
+
         // Keyboard controls
         document.addEventListener('keydown', function(event) {
             switch(event.key) {
-                case '1':
-                    selectOption('Quick Option 1');
-                    break;
-                case '2':
-                    selectOption('Quick Option 2');
-                    break;
-                case '3':
-                    selectOption('Quick Spawn Adder');
-                    break;
-                case '4':
-                    selectOption('Quick God Mode');
-                    break;
-                case '5':
-                    selectOption('Quick Add Money');
-                    break;
-                case '6':
-                    selectOption('Quick Heal');
+                case 'Enter':
+                    if (currentSubmenu) {
+                        const firstSubmenuItem = document.querySelector(`#submenu${currentSubmenu.slice(-1)} .submenu-item`);
+                        if (firstSubmenuItem) {
+                            firstSubmenuItem.click();
+                        }
+                    } else {
+                        toggleSubmenu('option1');
+                    }
                     break;
                 case 'Escape':
-                    window.close();
+                    if (currentSubmenu) {
+                        toggleSubmenu(currentSubmenu);
+                    }
+                    break;
+                case '1':
+                    selectOption('◈ QUANTUM OPTION 1 - ACTIVATED ◈');
+                    break;
+                case '2':
+                    selectOption('◈ QUANTUM OPTION 2 - ACTIVATED ◈');
                     break;
             }
         });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.dropdown')) {
-                document.querySelectorAll('.dropdown').forEach(dd => {
-                    dd.classList.remove('open');
-                });
-            }
+
+        // Initialize with epic entrance
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                showNotification('◈ QUANTUM INTERFACE INITIALIZED ◈');
+            }, 500);
         });
-        
-        // Initialize
-        showNotification('HTML Dropdown Menu Ready!');
-        console.log('🌟 Aura HTML Dropdown Menu Loaded! 🌟');
+
+        console.log('◈ QUANTUM MENU SYSTEM ACTIVATED ◈');
     </script>
 </body>
 </html>
-]]
