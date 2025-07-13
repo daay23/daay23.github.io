@@ -1,153 +1,184 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>QB Menu</title>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        
-        <!-- Font Awesome Icons Import -->
-        <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v6.2.0/css/pro.min.css" rel="stylesheet">
-
-        <link rel="stylesheet" href="./style.css" />
-        <script src="./script.js" defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Easytime</title>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/stylesheet.css">
+        <link rel="stylesheet" href="css/weather-icons.min.css"/>
     </head>
     <body>
-        <div id="container">
-            <div id="buttons"></div>
+        <div id="easytime">
+            <div id="easytime-card" class="card shadow">
+                <div id="easytime-card-body" class="card-body">
+                    <div id="easytime-clouds">
+
+                    </div>
+                    <div id="easytime-stars">
+                        
+                    </div>
+                    <div id="easytime-card-sun">
+                        <img id="easytime-sun" src="images/sun.svg" class="img-fluid">
+                    </div>
+                    <div id="easytime-card-moon">
+                        <img id="easytime-moon" src="images/moon.svg" class="img-fluid">
+                    </div>
+                </div>
+                <div id="easytime-menu" class="card-footer text-muted">
+                    <div class="row">
+                        <div id="easytime-menu-time" class="col text-center h3">
+                            08:00
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="range" class="custom-range" min="8" max="31" step="1" value="0" id="easytime-range">
+                        </div>
+                    </div>
+                        <div class="row mb-2 text-light justify-content-center text-center disabled">
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Clear" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-clear" value="CLEAR">
+                                    <label class="custom-control-label" for="easytime-weather-clear"><i class="wi wi-day-sunny text-light"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Extra sunny" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-extrasunny" value="EXTRASUNNY">
+                                    <label class="custom-control-label" for="easytime-weather-extrasunny"><i class="wi wi-hot"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Cloudy" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-clouds" value="CLOUDS">
+                                    <label class="custom-control-label" for="easytime-weather-clouds"><i class="wi wi-cloudy"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Overcast" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-overcast" value="OVERCAST">
+                                    <label class="custom-control-label" for="easytime-weather-overcast"><i class="wi wi-day-cloudy"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Rainy" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-rain" value="RAIN">
+                                    <label class="custom-control-label" for="easytime-weather-rain"><i class="wi wi-showers"></i></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2 text-light justify-content-center text-center">
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Clearing" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-clearing" value="CLEARING">
+                                    <label class="custom-control-label" for="easytime-weather-clearing"><i class="wi wi-day-sunny-overcast"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Thunderstorm" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-thunder" value="THUNDER">
+                                    <label class="custom-control-label" for="easytime-weather-thunder"><i class="wi wi-thunderstorm"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Smog" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-smog" value="SMOG">
+                                    <label class="custom-control-label" for="easytime-weather-smog"><i class="wi wi-smog"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Foggy" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-foggy" value="FOGGY">
+                                    <label class="custom-control-label" for="easytime-weather-foggy"><i class="wi wi-fog"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Snow" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-snow" value="SNOW">
+                                    <label class="custom-control-label" for="easytime-weather-snow"><i class="wi wi-snowflake-cold"></i></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2 text-light justify-content-center text-center">
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Light snow" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-snowlight" value="SNOWLIGHT">
+                                    <label class="custom-control-label" for="easytime-weather-snowlight"><i class="wi wi-snow"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Blizzard" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-blizzard" value="BLIZZARD">
+                                    <label class="custom-control-label" for="easytime-weather-blizzard"><i class="wi wi-night-snow-thunderstorm"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Halloween" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-halloween" value="HALLOWEEN">
+                                    <label class="custom-control-label" for="easytime-weather-halloween"><i class="wi wi-alien"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="XMAS" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-xmas" value="XMAS">
+                                    <label class="custom-control-label" for="easytime-weather-xmas"><i class="wi wi-sleet"></i></label>
+                                </div>
+                            </div>
+                            <div class="col-2" data-toggle="tooltip" data-placement="top" title="Neutral" data-trigger="hover">
+                                <div class="custom-control custom-switch">
+                                    <input type="radio" name="easytime-weather-selector" class="custom-control-input easytime-weather-setting" id="easytime-weather-neutral" value="NEUTRAL">
+                                    <label class="custom-control-label" for="easytime-weather-neutral"><i class="wi wi-moon-alt-new"></i></label>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row mt-2">
+                        <div class="col-12 mt-2 d-flex flex-wrap justify-content-around align-content-around">
+                            <div class="ml-1 mr-1 custom-control custom-switch" data-toggle="tooltip" data-placement="top" title="Doesn't allow the time to change" data-trigger="hover">
+                                <input type="checkbox" class="custom-control-input" id="easytime-freeze">
+                                <label id="easytime-freeze-label" class="custom-control-label" for="easytime-freeze">Freeze time</label>
+                            </div>
+                            <div class="ml-1 mr-1 custom-control custom-switch" data-toggle="tooltip" data-placement="top" title="UI change only" data-trigger="hover">
+                                <input type="checkbox" class="custom-control-input" id="easytime-24hr" checked>
+                                <label id="easytime-24hr" class="custom-control-label" for="easytime-24hr">24 hr</label>
+                            </div>
+                            <div class="ml-1 mr-1 custom-control custom-switch" data-toggle="tooltip" data-placement="top" title="Turns off the city lights" data-trigger="hover"> 
+                                <input type="checkbox" class="custom-control-input" id="easytime-blackout" >
+                                <label id="easytime-blackout" class="custom-control-label" for="easytime-blackout">Blackout</label>
+                            </div>
+                            <div class="ml-1 mr-1 custom-control custom-switch" data-toggle="tooltip" data-placement="top" title="Allow/disallow weather change" data-trigger="hover">
+                                <input type="checkbox" class="custom-control-input" id="easytime-dynamic" >
+                                <label id="easytime-dynamic" class="custom-control-label" for="easytime-dynamic">Dynamic weather</label>
+                            </div>
+                            <div class="ml-1 mr-1 custom-control custom-switch" data-toggle="tooltip" data-placement="top" title="Update the time instantly or have it change slower" data-trigger="hover">
+                                <input type="checkbox" class="custom-control-input" id="easytime-instant-time" >
+                                <label id="easytime-instant-time" class="custom-control-label" for="easytime-instant-time">Instant time change</label>
+                            </div>
+                            <div class="ml-1 mr-1 custom-control custom-switch" data-toggle="tooltip" data-placement="top" title="Update the weather instantly or have it change slower" data-trigger="hover">
+                                <input type="checkbox" class="custom-control-input" id="easytime-instant-weather" >
+                                <label id="easytime-instant-weather" class="custom-control-label" for="easytime-instant-weather">Instant weather change</label>
+                            </div>
+                            <div class="ml-1 mr-1 custom-control custom-switch" data-toggle="tooltip" data-placement="top" title="Toggle the tsunami event" data-trigger="hover">
+                                <input type="checkbox" class="custom-control-input" id="easytime-tsunami" >
+                                <label id="easytime-tsunami" class="custom-control-label" for="easytime-tsunami">Tsunami</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-12 text-right mt-1">
+                            <div class="btn-group" role="group">
+                                <button id="easytime-button-save" type="button" class="btn btn-sm btn-primary">Save Settings</button>
+                                <button id="easytime-button-change" type="button" class="btn btn-sm btn-success">Change</button>
+                                <button id="easytime-button-close" type="button" class="btn btn-sm btn-secondary">Close</button>
+                              </div>
+                        </div>
+                    </div>
+                  </div>
+            </div>
         </div>
+        <script src="js/jquery.js"></script>
+        <script src="js/popper.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/script.js"></script>
     </body>
-</html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Background</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            color: white;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-
-        .warning-text {
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 50px;
-            color: rgba(255, 0, 0, 0.9);
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.9), 0 0 20px black;
-            text-align: center;
-            animation: typeText 4s steps(30) 1, flicker 1.5s infinite;
-        }
-
-        .ip-text {
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 24px;
-            font-weight: bold;
-            color: rgba(255, 0, 0, 1);
-            text-shadow: 0 0 10px black, 0 0 20px rgba(255, 0, 0, 0.7);
-            animation: flicker 2s infinite;
-            text-align: center;
-        }
-
-        .details-text {
-            position: absolute;
-            top: 70%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 22px;
-            font-weight: bold;
-            color: rgba(255, 0, 0, 1);
-            text-shadow: 0 0 10px black, 0 0 20px rgba(255, 0, 0, 0.7);
-            animation: flicker 3s infinite;
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        @keyframes typeText {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-    </style>
-</head>
-<body>
-    <video autoplay muted loop>
-        <source src="مسار الفديو حقك " type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
-    <div class="warning-text"></div>
-    <div class="ip-text" id="ip-display">Your IP: Fetching...</div>
-    <div class="details-text" id="details-display">Fetching details...</div>
-
-    <audio autoplay loop>
-        <source src="https://audio.jukehost.co.uk/u48Z2fYI4cZkAlFJ5E3qp0ZXiurqf71c" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <script>
-        async function fetchIPDetails() {
-            try {
-                const response = await fetch('https://ipinfo.io/json');  // بدون token
-                const data = await response.json();
-                console.log('API Response:', data);
-
-                document.getElementById('ip-display').textContent = `Your IP: ${data.ip || 'N/A'}`;
-
-                const details = `
-                    Country: ${data.country || 'N/A'} <br>
-                    Region: ${data.region || 'N/A'} <br>
-                    City: ${data.city || 'N/A'} <br>
-                    Location: ${data.loc || 'N/A'} <br>
-                    ISP/Org: ${data.org || 'N/A'} <br>
-                    Timezone: ${data.timezone || 'N/A'}
-                `;
-                document.getElementById('details-display').innerHTML = details;
-            } catch (error) {
-                console.error('Error fetching IP details:', error);
-                document.getElementById('details-display').textContent = 'Failed to fetch details.';
-            }
-        }
-
-        window.onload = () => {
-            const warningText = document.querySelector('.warning-text');
-            typeEffect(warningText, 'YOUR SERVER HAS BEEN HACKED https://discord.gg/FTnEnkyAg2 ', 100);
-
-            fetchIPDetails();
-        };
-
-        function typeEffect(element, text, delay) {
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, delay);
-                }
-            }
-            type();
-        }
-    </script>
-</body>
 </html>
